@@ -1,0 +1,62 @@
+{
+  "_comment": "河牌训练收敛控制配置 - 基于设计文档推荐配置",
+  
+  "iterations": 100000,
+  "cfr_iterations_per_update": 1000,
+  "network_train_steps": 2000,
+  "batch_size": 256,
+  "learning_rate": 0.001,
+  "checkpoint_dir": "checkpoints/river_convergence",
+  "checkpoint_interval": 10000,
+  "eval_interval": 5000,
+  "network_architecture": [512, 256, 128],
+  "regret_buffer_size": 500000,
+  "strategy_buffer_size": 500000,
+  "initial_stack": 1000,
+  "small_blind": 5,
+  "big_blind": 10,
+  "max_raises_per_street": 4,
+  "board": null,
+  
+  "_convergence_control_comment": "收敛控制相关配置（需求: 1.2, 1.3, 1.4, 3.1, 3.3, 6.1）",
+  
+  "cfr_variant": "cfr_plus",
+  "regret_decay_factor": 0.995,
+  "regret_clip_threshold": 50.0,
+  "use_huber_loss": true,
+  "ema_decay": 0.99,
+  "gradient_clip_norm": 1.0,
+  
+  "_regret_processor_comment": "遗憾值处理器配置",
+  "regret_processor": {
+    "use_positive_truncation": true,
+    "decay_factor": 0.995,
+    "clip_threshold": 50.0
+  },
+  
+  "_network_trainer_comment": "网络训练器配置",
+  "network_trainer": {
+    "use_huber_loss": true,
+    "huber_delta": 1.0,
+    "use_ema": true,
+    "ema_decay": 0.99,
+    "kl_coefficient": 0.01,
+    "gradient_clip_norm": 1.0
+  },
+  
+  "_buffer_manager_comment": "缓冲区管理器配置",
+  "buffer_manager": {
+    "time_decay_factor": 0.99,
+    "importance_threshold": 0.1,
+    "max_sample_age": 5000,
+    "stratified_sampling": false
+  },
+  
+  "_convergence_monitor_comment": "收敛监控器配置",
+  "convergence_monitor": {
+    "entropy_window": 100,
+    "oscillation_threshold": 0.1,
+    "kl_warning_threshold": 0.5,
+    "monitor_interval": 500
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "learning_rate": 0.001,
+  "batch_size": 2048,
+  "num_episodes": 10000,
+  "discount_factor": 1.0,
+  "network_architecture": [512, 256, 128],
+  "checkpoint_interval": 1000,
+  "num_parallel_envs": 1,
+  "initial_stack": 10000,
+  "small_blind": 50,
+  "big_blind": 100,
+  "regret_buffer_size": 2000000,
+  "strategy_buffer_size": 2000000,
+  "cfr_iterations_per_update": 1000,
+  "network_train_steps": 4000
+}

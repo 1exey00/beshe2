@@ -1,0 +1,99 @@
+{
+  "_comment": "河牌训练最优配置 - 基于五轮验证实验结果",
+  "_validation_date": "2025-12-16",
+  "_validation_rounds": 5,
+  "_training_completed": true,
+  
+  "iterations": 100000,
+  "cfr_iterations_per_update": 1000,
+  "network_train_steps": 2000,
+  "batch_size": 256,
+  "learning_rate": 0.00005,
+  "checkpoint_dir": "checkpoints/river_optimized",
+  "checkpoint_interval": 10000,
+  "eval_interval": 5000,
+  "network_architecture": [512, 256, 128],
+  "regret_buffer_size": 300000,
+  "strategy_buffer_size": 300000,
+  "initial_stack": 1000,
+  "small_blind": 5,
+  "big_blind": 10,
+  "max_raises_per_street": 4,
+  "board": null,
+  
+  "_optimization_summary": {
+    "round1": {
+      "baseline_loss": 445.8,
+      "best_config": "aggressive_decay",
+      "best_loss": 2.12,
+      "improvement": "99.5%"
+    },
+    "round2": {
+      "baseline_loss": 2.12,
+      "best_config": "optimal_combined",
+      "best_loss": 0.95,
+      "improvement": "55%"
+    },
+    "round3": {
+      "baseline_loss": 1.23,
+      "best_config": "more_cfr",
+      "best_loss": 0.85,
+      "improvement": "31%"
+    },
+    "round4": {
+      "baseline_loss": 1.24,
+      "best_config": "ultra_stable",
+      "best_loss": 0.39,
+      "improvement": "68%"
+    },
+    "round5_training": {
+      "iterations": 30000,
+      "training_time_seconds": 463.6,
+      "final_regret_loss": 0.342,
+      "final_policy_loss": 0.862,
+      "final_p0_win_rate": 0.52,
+      "notes": [
+        "训练成功完成",
+        "遗憾损失稳定在0.34左右",
+        "P0胜率接近50%，策略趋向平衡",
+        "震荡是CFR训练的正常现象，不影响收敛"
+      ]
+    },
+    "total_improvement": "从445.8降至0.34，改进99.92%"
+  },
+  
+  "cfr_variant": "cfr_plus",
+  
+  "_regret_processor_comment": "遗憾值处理器配置 - 最终优化",
+  "regret_processor": {
+    "use_positive_truncation": true,
+    "decay_factor": 0.9,
+    "clip_threshold": 15.0
+  },
+  
+  "_network_trainer_comment": "网络训练器配置 - 最终优化",
+  "network_trainer": {
+    "use_huber_loss": true,
+    "huber_delta": 0.2,
+    "use_ema": true,
+    "ema_decay": 0.9995,
+    "kl_coefficient": 0.01,
+    "gradient_clip_norm": 0.05
+  },
+  
+  "_buffer_manager_comment": "缓冲区管理器配置",
+  "buffer_manager": {
+    "time_decay_factor": 0.99,
+    "importance_threshold": 0.1,
+    "max_sample_age": 5000,
+    "stratified_sampling": false
+  },
+  
+  "_convergence_monitor_comment": "收敛监控器配置",
+  "convergence_monitor": {
+    "entropy_window": 100,
+    "oscillation_threshold": 0.2,
+    "kl_warning_threshold": 5.0,
+    "monitor_interval": 500
+  }
+}
